@@ -1,0 +1,157 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      	<meta id="author" content="Gareth Senior">
+        <title>New Writing High Barnet: Error! Sorry!</title>
+        <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,bold">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-527902-6"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-527902-6');
+        </script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="header">
+          <header>
+            <ul id="skip_links">
+                <li><a id="skip_links__nav" href="#nav">skip to nav</a></li>
+                <li><a id="skip_links__content" href="#content">skip to content</a></li>
+            </ul>
+            <p id="logo"><a href="#home"></a></p>
+            <nav id="nav">
+              <ul class="main-nav">
+                <li><a href="http://newwritinghb.com/#home">Home</a>
+                <li><a href="http://newwritinghb.com/#venue">Venue</a>
+                <li><a href="http://newwritinghb.com/#about">Your Host</a>
+                <li><a href="http://newwritinghb.com/#contact">Get In Touch</a>
+              </ul>
+            </nav>
+          </header>
+        </div>
+
+        <div class="content">
+          <main id="content">
+
+            <article class="screen" id="error">
+              <h1>Error</h1>
+              <p>Uh-oh! Something bad happened.</p>
+              <p>Probably some content that used to exist has ceased to do so. Ah well, that's the cycle of life.</p>
+              <p>Now, move on with your life. Or <a href="http://newwritinghb.com/#contact">email me</a> with a polite missive.</p>
+            </article>
+
+          </main>
+        </div>
+
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-527902-3','auto');ga('send','pageview');
+
+            window.addEventListener('load', function() {
+                var d = document;
+                var remove_class = function(el, cls) {
+                    if (!el) {return;}
+                    el.className = el.className.replace(cls, '').replace(/\s*$/g, "");
+                }
+                var add_class = function(el, cls) {
+                    if (!el) {return;}
+                    el.className += ' ' + cls;
+                }
+                var toggle_class = function(el, cls) {
+                    if (!el) {return;}
+                    if (el.className.indexOf(cls) == -1) { add_class(el, cls); }
+                    else { remove_class(el, cls); }
+                }
+                /* NAVIGATION */
+                var class_click = function(clicker, el, val) {
+                  /*
+                  clicker: element to attach a click event to
+                  el: target element for manipulation
+                  val: class value to toggle
+                  */
+                  var class_adjust = function() {
+                      toggle_class(el, val);
+                  }
+                  for (var i=0; i < clicker.length; i++) {
+                    clicker[i].addEventListener('click', class_adjust);
+                  }
+                }
+                var hdr = d.getElementsByClassName('header')[0];
+                class_click([d.getElementById('skip_links__nav')], hdr, 'open');
+                window.addEventListener('scroll', function() { remove_class(hdr, 'open'); });
+
+
+                /* ARTICLE RESIZE */
+                var article_resize = function() {
+                    // resize the articles to be at least equal to the height of window, for aesthetic reasons
+                    var els = d.getElementsByClassName('screen');
+                    for (var i =0; i < els.length; i++) {
+                      els[i].setAttribute('style', 'min-height:'+(parseInt(window.innerHeight)*.75)+'px;');
+                    }
+                }
+                article_resize();
+                window.addEventListener('resize', article_resize);
+
+                /* NAVIGATION UPSTATES */
+                var nav_adjust = function() {
+                    var view_top = window.pageYOffset;
+                    var min_distance = null;
+                    var curr_tag = "home";
+                    var screens = d.getElementsByClassName('screen');
+                    for (var i=0; i<screens.length; i++) {
+                        var a = screens[i];
+                        var dist = Math.abs(view_top - a.offsetTop)
+                        if ((min_distance == null) || (dist < min_distance)) {
+                          curr_tag = a.getAttribute('id');
+                          min_distance = dist;
+                        }
+                    };
+                    var get_tag = function(el) {
+                      return el.getAttribute('href').replace('#', '')
+                    }
+                    // get current upstate
+                    var curr = d.getElementsByClassName('up')[0];
+                    if ((!curr) || (get_tag(curr) != curr_tag)) {
+                      // undo last upstate
+                      toggle_class(curr, 'up');
+                      // apply new upstate
+                      var nav = d.getElementById('nav');
+                      var anchors = nav.getElementsByTagName('a');
+                      for (var i=0; i< anchors.length; i++) {
+                        var a = anchors[i];
+                        if (get_tag(a) == curr_tag) {
+                            toggle_class(a, 'up');
+                            break;
+                        }
+                      }
+                    }
+                };
+
+                nav_adjust();
+                window.addEventListener('scroll', nav_adjust);
+            });
+        </script>
+    </body>
+</html>
